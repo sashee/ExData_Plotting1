@@ -1,0 +1,7 @@
+png("plot2.png")
+data <- read.csv('household_power_consumption.txt',skip=66636, nrows=2880, header=FALSE, sep=";")
+data$date <- mapply(function(a,b){as.POSIXct(strptime(paste(a,b),format="%d/%m/%Y %H:%M:%S"))},data$V1,data$V2)
+with(data, plot(date, V3,type="n",xaxt = "n",xlab="",ylab="Global Active Power (kilowatts)"))
+lines(data$date,data$V3)
+axis(1,c(min(data$date),min(data$date)+86400,min(data$date)+2*86400),labels=c("Thu","Fri","Sat"))
+dev.off()
